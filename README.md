@@ -1,4 +1,4 @@
-# 02-vue-firebase-project
+Vue Firebase Project
 
 > A Vue.js project
 
