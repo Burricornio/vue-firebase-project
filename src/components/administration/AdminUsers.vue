@@ -29,6 +29,7 @@
 
 <script>
 import AdminUsersDialog from '@/components/administration/AdminUsersDialog'
+import {db} from '@/main'
 
 export default {
   name: 'admin-users',
@@ -49,11 +50,37 @@ export default {
   },
   methods: {
       editUser (user) {
-
+          this.$store.commit('toggleUsersDialog', {
+              editMode: true,
+              user
+          })
       },
       removeUser (user) {
-          
+          db.collection('users').doc(user.uid).delete().then(() => {
+              this.$store.commit('setAlertMessage', {
+                  show: true,
+                  type: 'success',
+                  message: this.$t('messages.deleted', {item: this.$t('common.user')}),
+                  timeout: 5000
+              })
+          })
       }
+  },
+  mounted () {
+      this.loading = true
+      db.collection('users').onSnapshot(snapshot => {
+          this.users = [];
+          snapshot.forEach(user => {
+              const userData = user.data()
+               this.users.push({
+                   uid: userData.uid,
+                   email: userData.email,
+                   username: userData.username || '---'
+
+               })
+          })
+          this.loading = false
+      })
   }
 }
 </script>

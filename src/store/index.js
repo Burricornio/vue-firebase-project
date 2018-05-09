@@ -3,6 +3,7 @@ import Vue from 'vue'
 import Vuex from 'vuex'
 import authModule from '@/modules/auth'
 import userModule from '@/modules/user'
+import productsModule from '@/modules/products'
 
 // Utilizamos el plugin
 Vue.use(Vuex)
@@ -28,14 +29,15 @@ export default new Vuex.Store({
             state.alert.show = data.show;
             state.alert.message = data.message;
             setTimeout(() => {
-                state.alert.type = data.type;
-                state.alert.show = data.show;
-                state.alert.message = data.message;
-            }, data.timeout)
-        }
+              state.alert.type = 'success';
+              state.alert.show = false;
+              state.alert.message = '';
+            }, data.timeout);
+          }
     },
     modules: {
         authModule,
-        userModule
+        userModule,
+        productsModule
     }
 })

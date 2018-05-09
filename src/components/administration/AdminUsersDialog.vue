@@ -110,7 +110,8 @@
                         message: this.$t('messages.updated', {item: this.$t('common.user')}),
                         timeout: 5000
                     })
-                })
+                });
+                this.close()
             }
         },
         computed: {
